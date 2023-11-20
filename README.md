@@ -6,7 +6,7 @@ Melcloud2Domoticz updated by Giljam Val
 
 With version 3.0 you can now read out some more parameters (see below), you can also add new ones more easily, it reads out everything you add in the config file .mcdevices.
 
-(below from the config file, first letter is Read/Write/eXclude (ignore), second letter is General/2eZone/Hotwater (skipped if not applicable). 3rd column is the Melcloud data type, then another type for Domoticz and another default value and an IDX). R#G # OperationMode # Text
+(below from the config file, first letter is Read/Write/eXclude (ignore), second letter is General/2eZone/Hotwater (skipped if not applicable). 3rd column is the Melcloud data type, then another type for Domoticz and another default value and an IDX)
 
 R#G#OperationMode#Text#-#4483
 X#G#HasHotWaterTank#Switch#On#0
