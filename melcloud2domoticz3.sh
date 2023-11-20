@@ -113,7 +113,7 @@ if [ "$McDebug" = On ] ; then echo 'DEBUG: Checking instance';echo; fi
 
 if [[ "`$PIDOF -x $(basename $0) -o %PPID`" ]]; then
         echo "This script is already running with PID `$PIDOF -x $(basename $0) -o %PPID`"
-        exit
+        #exit
 fi
 
 ## Check required apps availability
@@ -235,11 +235,12 @@ echo
 if [ "$McDebug" = On ] ; then echo 'DEBUG: Preparing dataset';echo; fi
 
 fulldata=$( cat $FOLDER/.deviceid )
+#echo -n "$fulldata" | tail -c +2 | head -c -1 > $FOLDER/.meldata>&1
+#upper one for sh
 echo "${fulldata:1:${#fulldata}-2}" > $FOLDER/.meldata>&1
-
 ## Check if data output is fine
 /bin/cat $FOLDER/.meldata | $JQ -e . >/dev/null 2>&1
-
+#if you run sh comment out this as piperstatus is not working
 if [ ${PIPESTATUS[1]} != 0 ]; then
         echo "Retrieved Data is not json compatible, something went wrong....Help...."
         exit
@@ -549,7 +550,7 @@ case $xru in
 #    ## Proces for power values
           if [ "$mc_dev" = "DailyHeatingEnergyConsumed" ] ; then
             echo "Operation mode is: $MOperationMode"
-        # Voor koelen andere optelsom toevoegen
+        # For cooling, add another sum
 
             echo "CurrentEnergyConsumed is: $MCurrentEnergyConsumed"  
             mc_data1000=`scale=0; echo "$mc_data*1000/1" | bc`
@@ -559,7 +560,7 @@ case $xru in
                $CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=udevice&idx=$idx&nvalue=0&svalue=$MCurrentEnergyConsumed;$mc_data1000" > /dev/null
                if [ "$McDebug" = On ] ; then echo "DEBUG: Power value (heating mode) of $mc_dev updated to $mc_data1000 in Domoticz"; fi
             else
-               # Voor koelen andere nog optelsom toevoegen
+               # For cooling, add others
                $CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=udevice&idx=$idx&nvalue=0&svalue=0;$mc_data1000" > /dev/null
                if [ "$McDebug" = On ] ; then echo "DEBUG: Power value (cooling mode) of $mc_dev updated to $mc_data1000 in Domoticz"; fi
             fi
@@ -651,7 +652,7 @@ case $xru in
      ;;
 
    *)
-   echo "Ongeldige letter in .mcdevices, alleen X, R of U zijn geldige  opties"
+   echo "Invalid letter in.mcdevices, only X, R, or U are valid options"
    ;;
 
    esac
@@ -686,5 +687,3 @@ if [ "$MelCloudUpdate" == "1" ]; then
 fi
 
 if [ "$McDebug" = On ] ; then echo 'DEBUG: Script is done';echo; fi
-
-
