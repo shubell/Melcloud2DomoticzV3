@@ -160,7 +160,7 @@ fi
 
 if [ "$McDebug" = On ] ; then echo 'DEBUG: Loading Send2MelCloud setting from Domoticz';echo; fi
 
-SEND2MELCLOUD=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$IDXSEND2MELCLOUD" | $JQ -r '.result[]."Data"'`
+SEND2MELCLOUD=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$IDXSEND2MELCLOUD" | $JQ -r '.result[]."Data"'`
 
 ## Set update status default to off for debugging/testing
 #SEND2MELCLOUD="Off"
@@ -275,32 +275,32 @@ function get_dom_value() {
        case $dev_type in
 
          Switch)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."Status"'`
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."Status"'`
             ;;
 
          SetPoint)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."SetPoint"'`
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."SetPoint"'`
             ;;
 
          Temp)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."Temp"'`
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."Temp"'`
             ;;
 
          Selector)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."Level"'`
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."Level"'`
             ;;
 
          Power)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."Usage"'` | sed 's/.....$//'
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."Usage"'` | sed 's/.....$//'
          # (SED to remove text (Watt))
             ;;
 
          Text)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."Data"'`
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."Data"'`
             ;;
 
          Percentage)
-            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx" | $JQ -r '.result[]."Data"'` | sed 's/.$//'
+            dom_data=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx" | $JQ -r '.result[]."Data"'` | sed 's/.$//'
          # (SED to remove %-sign)
             ;;
 
@@ -381,7 +381,7 @@ function OperationModeToText() {
 function UpdateHeatpumpActive() {
 ## Update Heatpump active switch (turns on when the heatpump is running, heating/cooling/defrosting and SWW)
 
-DHeatpumpActive=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=devices&rid=$idx"`
+DHeatpumpActive=`$CURL -s "http://$SERVERIP:$PORT/json.htm?type=command&param=getdevices&rid=$idx"`
 
         if [ $DHeatpumpActive == "Off" ] && [[ $OperationMode =~ [1-4,6] ]]; then
                         echo "DHeatpumpActive = off | OperationMode > 0 or 5"
