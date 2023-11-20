@@ -1,5 +1,9 @@
 # Melcloud2DomoticzV3
 Melcloud2Domoticz updated by Giljam Val
+# the data below is copy paste from a post Gival made on https://gathering.tweakers.net/forum/list_messages/2112892/5
+
+ I have made a version 3.0 of this script. (also stated in Albert's GIT). Unfortunately, this version 3.0 is not yet finished (I haven't gotten around to it yet). That's why I'm now running both scripts side by side. Version 2.0 for the updates to Melcloud and version 3.0 for reading out additional parameters. That works fine; just a little more processing, so I want to finish version 3.0 soon (I've already made some progress).
+
 With version 3.0 you can now read out some more parameters (see below), you can also add new ones more easily, it reads out everything you add in the config file .mcdevices.
 
 (below from the config file, first letter is Read/Write/eXclude (ignore), second letter is General/2eZone/Hotwater (skipped if not applicable). 3rd column is the Melcloud data type, then another type for Domoticz and another default value and an IDX). R#G # OperationMode # Text
